@@ -1,6 +1,7 @@
 import { makePrismaClientClass } from "prisma-client-lib";
 
 import { prisma } from "../../../../generated/prisma-client";
+import { generateToken } from "../../../utils";
 
 export default {
   Mutation: {
@@ -8,7 +9,11 @@ export default {
       const { secret, email } = args;
       const user = await prisma.user({ email });
       if (user.loginSecret === secret) {
-        return "TOKEN"
+        await prisma.updateUser({
+          where: { id: user.id },
+          data: { loginSecret: "" }
+        })
+        return generateToken(user.id);
       } else {
         throw Error("Wrong email/secret combination")
       }

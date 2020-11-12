@@ -1,5 +1,5 @@
-import { makePrismaClientClass } from "prisma-client-lib";
 import { prisma } from "../../../../generated/prisma-client";
+
 export default {
   Mutation: {
     createAccount: async (_, args) => {
