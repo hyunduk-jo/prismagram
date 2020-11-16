@@ -1,9 +1,8 @@
 import { prisma } from "../../../../generated/prisma-client";
-import { isAuthenticated } from "../../../middleware"
 
 export default {
   Mutation: {
-    toggleLike: async (_, args, { request }) => {
+    toggleLike: async (_, args, { request, isAuthenticated }) => {
       //check user is authenticated(middleware.js - isAuthenticated)
       isAuthenticated(request);
       const { postId } = args;
