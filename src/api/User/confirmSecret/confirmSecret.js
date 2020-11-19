@@ -1,5 +1,3 @@
-import { makePrismaClientClass } from "prisma-client-lib";
-
 import { prisma } from "../../../../generated/prisma-client";
 import { generateToken } from "../../../utils";
 

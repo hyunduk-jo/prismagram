@@ -1,5 +1,4 @@
 import { prisma } from "../../../../generated/prisma-client";
-import { ROOM_FRAGMENT } from "../../../fragment";
 
 export default {
   Query: {
@@ -9,7 +8,7 @@ export default {
       const { user } = request;
       const canSee = await prisma.$exists.room({ participants_some: { id: user.id } })
       if (canSee) {
-        return await prisma.room({ id: roomId }).$fragment(ROOM_FRAGMENT);
+        return await prisma.room({ id: roomId });
       } else {
         throw Error("You can't see this")
       }

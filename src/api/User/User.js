@@ -21,6 +21,8 @@ export default {
       const { user } = request;
       const { id: parentId } = parent;
       return user.id === parentId;
-    }
+    },
+    posts: parent => prisma.user({ id: parent.id }).posts(),
+    rooms: parent => prisma.user({ id: parent.id }).rooms()
   }
 }
