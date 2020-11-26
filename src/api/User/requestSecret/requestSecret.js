@@ -5,12 +5,19 @@ export default {
     requestSecret: async (_, args) => {
       const { email } = args;
       const loginSecret = generateSecret();
+      const existingEmail = await prisma.$exists.user({ email });
       try {
-        await sendSecretMail(email, loginSecret);
-        await prisma.updateUser({ data: { loginSecret }, where: { email } });
+        //console.log(email);
+        //console.log(existingEmail);
+        if (existingEmail === true) {
+          await sendSecretMail(email, loginSecret);
+          await prisma.updateUser({ data: { loginSecret }, where: { email } });
+        } else {
+          throw Error("Email not found");
+        }
         return true;
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         return false;
       }
     }
