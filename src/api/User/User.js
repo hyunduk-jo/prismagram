@@ -27,6 +27,9 @@ export default {
     following: parent => prisma.user({ id: parent.id }).following(),
     followers: parent => prisma.user({ id: parent.id }).followers(),
     likes: parent => prisma.user({ id: parent.id }).likes(),
-    comments: parent => prisma.user({ id: parent.id }).comments()
+    comments: parent => prisma.user({ id: parent.id }).comments(),
+    postsCount: ({ id }) => prisma.postsConnection({ where: { user: { id } } }).aggregate().count(),
+    followingCount: ({ id }) => prisma.usersConnection({ where: { followers_some: { id } } }).aggregate().count(),
+    followersCount: ({ id }) => prisma.usersConnection({ where: { following_some: { id } } }).aggregate().count()
   }
 }
